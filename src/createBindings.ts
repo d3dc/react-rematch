@@ -1,15 +1,15 @@
 import { RematchStore } from "@rematch/core";
 
-import withRedux from "./hoc/withRedux";
-import withModels from "./hoc/withModels";
-import hasReduxEffect from "./hoc/hasReduxEffect";
-import { connectWithSelect } from "./hoc/withSelection";
+import { createWithRedux } from "./hoc/withRedux";
+import { createWithModels } from "./hoc/withModels";
+import { createWithSelection } from "./hoc/withSelection";
+import { createHasReduxEffect } from "./hoc/hasReduxEffect";
 
 export const createBindings = (store: RematchStore) => ({
-  withRedux,
-  withModels,
-  withSelection: connectWithSelect(store.select),
-  hasReduxEffect: hasReduxEffect as hasReduxEffect<typeof store.dispatch>
+  withRedux: createWithRedux(store),
+  withModels: createModels(store),
+  withSelection: createWithSelection(store),
+  hasReduxEffect: createHasReduxEffect(store)
 });
 
 export default createBindings;

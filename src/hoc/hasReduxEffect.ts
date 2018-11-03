@@ -8,13 +8,18 @@ import {
 } from "recompose";
 import { connect } from "react-redux";
 import { values } from "lodash/fp";
+import { RematchStore } from "@rematch/core";
+
+// TODO: how do I curry types?
+export const createHasReduxEffect = (store: RematchStore) =>
+  hasReduxEffect as hasReduxEffect<typeof store.dispatch>;
 
 export const hasReduxEffect = <TDispatch, TProps = any>(
-  mapDispatchToEffect: (
+  dispatchEffect: (
     dispatch: TDispatch,
     props: TProps
   ) => Promise | { [key: string]: Promise },
-  shouldMapOrKeys:
+  shouldDispatchOrKeys:
     | Array<string>
     | ((props: TProps, nextProps: TProps) => boolean) = []
 ) => BaseComponent =>
@@ -24,9 +29,9 @@ export const hasReduxEffect = <TDispatch, TProps = any>(
     withState("isLoading", "setIsLoading", true),
     setDisplayName(wrapDisplayName(BaseComponent, "withWatchedProps")),
     withPropsOnChange(
-      shouldMapOrKeys,
+      shouldDispatchOrKeys,
       ({ dispatch, setIsLoading, ...rest }) => {
-        const dispatched = mapDispatchToEffect(dispatch, rest);
+        const dispatched = dispatchEffect(dispatch, rest);
         if (dispatched) {
           if (dispatched.then) {
             dispatched.then(() => setIsLoading(false));

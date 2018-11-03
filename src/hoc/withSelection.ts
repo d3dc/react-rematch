@@ -1,21 +1,22 @@
 import { setDisplayName, wrapDisplayName } from "recompose";
 import { RematchStore, RematchAsyncDispatcher } from "@rematch/core";
-import { Selector } from "@rematch/select";
-import { Provider, connect } from "react-redux";
+import { Selector, Provider, connect } from "react-redux";
 import { Component, createFactory } from "react";
 
-// Creates a HOC that calls connect with select
-export const connectWithSelect = <TSelect>(
-  select: TSelect
-) => BaseComponent => (
-  mapModelsToSelection: (models: TSelect) => { [key: string]: Selector }
-) =>
+export const createWithSelection = (store: RematchStore) => (
+  mapModelsToSelection: (
+    models: typeof store.select
+  ) => { [key: string]: Selector },
+  mapDispatchToProps: (
+    dispatch: typeof store.dispatch
+  ) => { [key: string]: RematchAsyncDispatcher }
+) => BaseComponent =>
   connect(
-    select(mapModelsToSelection),
+    store.select(mapModelsToSelection),
     mapDispatchToProps
   )(BaseComponent);
 
-// Lazy HOC that uses context to create a `connectWithSelect` HOC
+// Lazy HOC that uses context to call `createWithSelection`
 export const withSelection = <TSelect, TDispatch>(
   mapModelsToSelection: (models: TSelect) => { [key: string]: Selector },
   mapDispatchToProps: (
@@ -27,8 +28,9 @@ export const withSelection = <TSelect, TDispatch>(
     _factory = null;
     get factory() {
       if (!this._factory) {
-        this._factory = connectWithSelect<TSelect>(this.context.store.select)(
-          mapModelsToSelection
+        this._factory = createWithSelection(this.context.store)(
+          mapModelsToSelection,
+          mapDispatchToProps
         )(BaseComponent);
       }
       return this._factory;
