@@ -2,64 +2,20 @@
 
 React bindings for Rematch's flavor of Redux
 
-## API
+## Documentation
 
-### createBindings
+- [API docs](/docs/API.md)
 
-```
-(
-  store: RematchStore
-): ReactBindings
-```
+## Future
 
-Creates an object with all HOCs pre-bound to `store`'s types.
+- [These helpers line up great with the Hook proposal!](/docs/hooks.md)
 
-### withRedux
+## Motivation
 
-```
-(
-    mapStateToProps: (state: TRootState) => {},
-    mapDispatchToProps: (dispatch: TDispatch) => {}
-): HigherOrderComponentFactory
-```
+Rematch removes the boilerplate from redux. There's still a lot of boilerplate in React since the Redux bindings don't know about it's conventions.
 
-Just re-exports connect with a descriptive name.
+In addition, by removing things like subscriptions, Rematch forces side-effects to exist _correctly_ as a component in your architecture - leading to a react specific implementation.
 
-### withModels
+## License
 
-```
-(
-  ...models: [Model | string]
-): HigherOrderComponentFactory
-```
-
-Connects the passed models as full slices with state and dispatch.
-
-### withSelection
-
-```
-(
-  mapModelsToSelection: (models: TSelect) => { [key: string]: Selector },
-  mapDispatchToProps: (
-    dispatch: TDispatch
-  ) => { [key: string]: RematchAsyncDispatcher }
-): HigherOrderComponentFactory
-```
-
-Uses the store's `select` function to build `mapStateToProps` before calling connect.
-
-### hasReduxEffect
-
-```
-(
-  dispatchEffect: (
-    dispatch: TDispatch,
-    props: TProps
-  ) => Promise | { [key: string]: Promise },
-  shouldDispatchOrKeys:
-    | Array<string>
-    | ((props: TProps, nextProps: TProps) => boolean) = []
-): HigherOrderComponentFactory
-```
-
-Calls `dispatchEffect` when the wrapped component is first mounted. Effects can be repeated by passing an array of prop keys to watch or a predicate to call when `props` changes.
+ISC

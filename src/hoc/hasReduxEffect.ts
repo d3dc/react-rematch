@@ -14,6 +14,7 @@ import { RematchStore } from "@rematch/core";
 export const createHasReduxEffect = (store: RematchStore) =>
   hasReduxEffect as hasReduxEffect<typeof store.dispatch>;
 
+// TODO: shouldDispatchOrKeys doesn't work the same as `useEffect` in react 16.7
 export const hasReduxEffect = <TDispatch, TProps = any>(
   dispatchEffect: (
     dispatch: TDispatch,
