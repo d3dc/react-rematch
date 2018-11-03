@@ -9,7 +9,7 @@ Hooks provide an even more declarative way to structure your component data. The
 
 Hooks provide a great place for Rematch's abstractions to have meaning in react:
 
-```
+```js
 function TodoList(props){
   const [todos, people] = useModels('todos', 'people')
 
@@ -23,7 +23,7 @@ function TodoList(props){
 
 Hooks also bring with them a more obvious side-effect system that can keep redux out of your component lifecycle:
 
-```
+```js
 function TodoList(props){
   useReduxEffect(dispatch => dispatch.todos.loadTodos(props.startDate), [props.startDate])
   ...
