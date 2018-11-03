@@ -25,7 +25,10 @@ Hooks also bring with them a more obvious side-effect system that can keep redux
 
 ```js
 function TodoList(props){
-  useReduxEffect(dispatch => dispatch.todos.loadTodos(props.startDate), [props.startDate])
+  useReduxEffect(dispatch =>
+    dispatch.todos.loadTodos(props.startDate),
+    [props.startDate]
+  )
   ...
 }
 ```
