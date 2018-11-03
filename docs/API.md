@@ -2,7 +2,7 @@
 
 ### createBindings
 
-```
+```ts
 (
   store: RematchStore
 ): ReactBindings
@@ -14,7 +14,7 @@ Creates an object with all HOCs pre-bound to `store`'s types.
 
 ### withRedux
 
-```
+```ts
 (
     mapStateToProps: (state: TRootState) => {},
     mapDispatchToProps: (dispatch: TDispatch) => {}
@@ -25,7 +25,7 @@ Just re-exports connect with a descriptive name.
 
 ### withModels
 
-```
+```ts
 (
   ...models: [Model | string]
 ): HigherOrderComponentFactory
@@ -35,7 +35,7 @@ Connects the passed models as full slices with state and dispatch.
 
 ### withSelection
 
-```
+```ts
 (
   mapModelsToSelection: (models: TSelect) => { [key: string]: Selector },
   mapDispatchToProps: (
@@ -48,7 +48,7 @@ Uses the store's `select` function to build `mapStateToProps` before calling con
 
 ### hasReduxEffect
 
-```
+```ts
 (
   dispatchEffect: (
     dispatch: TDispatch,
