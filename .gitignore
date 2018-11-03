@@ -1,0 +1,27 @@
+# node
+node_modules
+npm-debug.*
+
+# build
+lib
+dist
+.rpt2_cache
+
+# editor
+.vscode
+.idea
+
+# tests
+coverage
+
+# release
+.release-it.json
+
+# gitbook
+_book
+*.epub
+*.mobi
+*.pdf
+
+# examples
+*.bundle.js

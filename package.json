@@ -1,0 +1,70 @@
+{
+  "name": "react-rematch",
+  "version": "1.0.0",
+  "publishConfig": {
+    "tag": "next"
+  },
+  "description": "React bindings tailored to Rematch models",
+  "keywords": [
+    "react",
+    "rematch",
+    "connect"
+  ],
+  "homepage": "https://github.com/rematch/rematch",
+  "bugs": {
+    "url": "git+https://github.com/rematch/rematch/issues"
+  },
+  "license": "ISC",
+  "main": "dist/react.cjs.js",
+  "module": "dist/react.esm.js",
+  "browser": "dist/react.umd.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rematch/rematch.git"
+  },
+  "scripts": {
+    "test": "NODE_ENV=development ts-jest",
+    "release": "release-it",
+    "build": "npm run clean && npm test && NODE_ENV=production rollup -c",
+    "clean": "npm run clean:dist & npm run clean:build",
+    "clean:build": "npx rimraf build",
+    "clean:dist": "npx rimraf dist"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "setupTestFrameworkScriptFile": "./test/_setup.js"
+  },
+  "devDependencies": {
+    "ts-jest": "^23.4.2",
+    "jest": "^23.4.2",
+    "enzyme": "^3.4.1",
+    "enzyme-adapter-react-16": "^1.2.0",
+    "react": "^16.6.0",
+    "react-dom": "^16.4.2",
+    "recompose": "^0.30.0",
+    "regenerator-runtime": "^0.12.1",
+    "release-it": "^7.5.0",
+    "rollup": "^0.62.0",
+    "rollup-plugin-babel": "^3.0.7",
+    "rollup-plugin-uglify": "^3.0.0",
+    "typescript": "^3.1.1",
+    "uglify-es": "^3.3.9"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "@rematch/core": "^1.0.6"
+  },
+  "authors": [
+    "Sam Richard <sam.richard@gmail.com> (https://github.com/d3dc)"
+  ],
+  "dependencies": {
+    "lodash-es": "^4.17.11"
+  }
+}
