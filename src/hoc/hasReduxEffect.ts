@@ -10,16 +10,11 @@ import { connect } from "react-redux";
 import { values } from "lodash/fp";
 import { RematchStore } from "@rematch/core";
 
-// TODO: how do I curry types?
-export const createHasReduxEffect = (store: RematchStore) =>
-  hasReduxEffect as hasReduxEffect<typeof store.dispatch>;
-
-// TODO: shouldDispatchOrKeys doesn't work the same as `useEffect` in react 16.7
-export const hasReduxEffect = <TDispatch, TProps = any>(
+export const hasReduxEffect = <TDispatch, TProps extends Object>(
   dispatchEffect: (
     dispatch: TDispatch,
     props: TProps
-  ) => Promise | { [key: string]: Promise },
+  ) => Promise<any> | { [key: string]: Promise<any> },
   shouldDispatchOrKeys:
     | Array<string>
     | ((props: TProps, nextProps: TProps) => boolean) = []
@@ -32,7 +27,7 @@ export const hasReduxEffect = <TDispatch, TProps = any>(
     withPropsOnChange(
       shouldDispatchOrKeys,
       ({ dispatch, setIsLoading, ...rest }) => {
-        const dispatched = dispatchEffect(dispatch, rest);
+        const dispatched = dispatchEffect(dispatch, rest as TProps);
         if (dispatched) {
           if (dispatched.then) {
             dispatched.then(() => setIsLoading(false));
@@ -46,5 +41,9 @@ export const hasReduxEffect = <TDispatch, TProps = any>(
     ),
     mapProps(({ dispatch, setIsLoading, ...rest }) => rest)
   )(BaseComponent);
+
+// TODO: how do I curry types?
+export const createHasReduxEffect = (store: RematchStore) =>
+  hasReduxEffect<typeof store.dispatch>
 
 export default hasReduxEffect;
